@@ -7,7 +7,7 @@
     tools:context=".MainActivity"
     android:orientation="vertical"
     android:id="@+id/linear_layout"
-    android:background="#1E90FF">
+    android:background="#8867C5">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
@@ -20,6 +20,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/Theme.MaterialComponents.Light"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:layout_width="wrap_content"
