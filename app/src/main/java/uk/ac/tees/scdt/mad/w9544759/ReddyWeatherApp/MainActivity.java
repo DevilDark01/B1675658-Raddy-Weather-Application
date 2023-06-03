@@ -7,17 +7,20 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 import retrofit2.Call;
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     LocationListener locationListener;
     double lat,lon;
 
+    FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +55,14 @@ public class MainActivity extends AppCompatActivity {
         imageViewer = findViewById(R.id.imageViewer);
         fab = findViewById(R.id.fab);
 
+        auth = FirebaseAuth.getInstance();
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Intent intent =new Intent(MainActivity.this, WeatherActivity.class);
+                startActivity(intent);
 
             }
         });
@@ -96,6 +105,22 @@ public class MainActivity extends AppCompatActivity {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,500,50,locationListener);
         }
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (item.getItemId() == R.id.profile_account){
+            startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+        }
+
+        if (item.getItemId() == R.id.logout){
+            auth.signOut();
+            startActivity(new Intent(MainActivity.this, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
